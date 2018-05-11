@@ -9,4 +9,4 @@ Built with Xamarin.Forms with support for:
     iOS
     Android
 
-Build Status: [![Build status](https://ci.appveyor.com/api/projects/status/eatap4qqdny8r9x6?svg=true)](https://ci.appveyor.com/project/wilsonvargas/searchbarnavigationpage)
+[![Build status](https://ci.appveyor.com/api/projects/status/eatap4qqdny8r9x6?svg=true)](https://ci.appveyor.com/project/wilsonvargas/searchbarnavigationpage) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/wilsondonations/5)
