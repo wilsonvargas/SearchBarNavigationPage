@@ -1,16 +1,16 @@
 ﻿using SearchCustomNavigationPage.Model;
 using SearchCustomNavigationPage.Views;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SearchCustomNavigationPage.ViewModels
 {
     public class MenuViewModel : BaseViewModel
     {
-        private List<MasterPageItem> _items;
+        public MenuViewModel()
+        {
+            Items = new List<MasterPageItem>();
+            Load();
+        }
 
         public List<MasterPageItem> Items
         {
@@ -18,11 +18,7 @@ namespace SearchCustomNavigationPage.ViewModels
             set { SetProperty(ref _items, value); }
         }
 
-        public MenuViewModel()
-        {
-            Items = new List<MasterPageItem>();
-            Load();
-        }
+        private List<MasterPageItem> _items;
 
         private void Load()
         {
@@ -39,6 +35,5 @@ namespace SearchCustomNavigationPage.ViewModels
                 Target = typeof(Page2)
             });
         }
-
     }
 }

@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <controls:SearchPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:SearchCustomNavigationPage.Controls" 
+             xmlns:controls="clr-namespace:SearchCustomNavigationPage.Controls"
              x:Class="SearchCustomNavigationPage.Views.Page1"
              Title="Page 1"
              SearchPlaceHolderText="Buscar"
              SearchCommand="{Binding SearchCommand}">
     <ContentPage.Content>
         <StackLayout Spacing="20">
-            <Label Text="This is the search page 1" HorizontalOptions="Center" FontAttributes="Bold"/>
-            <Label Text="{Binding SearchResult}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+            <Label Text="This is the search page 1" HorizontalOptions="Center" FontAttributes="Bold" />
+            <Label Text="{Binding SearchResult}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </controls:SearchPage>

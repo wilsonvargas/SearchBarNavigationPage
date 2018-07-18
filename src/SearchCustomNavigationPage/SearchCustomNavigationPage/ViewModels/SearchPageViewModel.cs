@@ -18,7 +18,6 @@ namespace SearchCustomNavigationPage.ViewModels
         }
 
         public ICommand SearchCommand { get; }
-        string searchResult;
 
         public string SearchResult
         {
@@ -32,5 +31,7 @@ namespace SearchCustomNavigationPage.ViewModels
                 SetProperty(ref searchResult, value);
             }
         }
+
+        private string searchResult;
     }
 }

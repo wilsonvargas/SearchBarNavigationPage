@@ -1,11 +1,5 @@
-﻿using SearchCustomNavigationPage.Controls;
-using SearchCustomNavigationPage.Model;
-using SearchCustomNavigationPage.ViewModels;
+﻿using SearchCustomNavigationPage.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace SearchCustomNavigationPage.Views
@@ -13,7 +7,7 @@ namespace SearchCustomNavigationPage.Views
     public partial class MainPage : MasterDetailPage
     {
         public MainPage()
-        {            
+        {
             InitializeComponent();
             Master = menuPage;
             Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(Page1)));

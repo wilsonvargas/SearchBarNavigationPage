@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using CoreGraphics;
 using Foundation;
-using UIKit;
-using Xamarin.Forms.Platform.iOS;
-using CoreGraphics;
-using Xamarin.Forms;
-using SearchCustomNavigationPage.iOS;
 using SearchCustomNavigationPage.Controls;
+using SearchCustomNavigationPage.iOS;
+using UIKit;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(SearchPage), typeof(SearchPageRenderer))]
+
 namespace SearchCustomNavigationPage.iOS
 {
     public class SearchPageRenderer : PageRenderer
     {
-        private UIButton _searchButton;
         private UIButton _cancelButton;
-        private UIBarButtonItem _searchbarButtonItem;
         private UIView _defaultTitleView;
+        private UIBarButtonItem _searchbarButtonItem;
+        private UIButton _searchButton;
         private UIBarButtonItem hamburgerButton;
+
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
@@ -32,6 +29,44 @@ namespace SearchCustomNavigationPage.iOS
             hamburgerButton = ParentViewController.NavigationItem.LeftBarButtonItem;
         }
 
+        private void CancelButton_TouchUpInside(object sender, System.EventArgs e)
+        {
+            ClearRightToolbarButton();
+            HideSearchToolbar();
+            DisplayRightBarButton(_searchButton);
+        }
+
+        private void ClearRightToolbarButton()
+        {
+            if (ParentViewController?.NavigationItem != null)
+            {
+                ParentViewController.NavigationItem.RightBarButtonItem = null;
+            }
+        }
+
+        private void CreateCancelButton()
+        {
+            var element = Element as SearchPage;
+            if (element == null)
+            {
+                return;
+            }
+            if (NavigationController?.NavigationBar != null)
+            {
+                var searchButtonView = new UIView(new CGRect(0, 0, 60, NavigationController.NavigationBar.Frame.Height));
+                _cancelButton = new UIButton(UIButtonType.System)
+                {
+                    BackgroundColor = UIColor.Clear,
+                    Frame = searchButtonView.Frame,
+                    AutosizesSubviews = true,
+                    AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleMargins,
+                    HorizontalAlignment = UIControlContentHorizontalAlignment.Right
+                };
+            }
+            _cancelButton.SetTitle("Cancel", UIControlState.Normal);
+            _cancelButton.TouchUpInside -= CancelButton_TouchUpInside;
+            _cancelButton.TouchUpInside += CancelButton_TouchUpInside;
+        }
 
         private void CreateSearchButton()
         {
@@ -108,30 +143,6 @@ namespace SearchCustomNavigationPage.iOS
             _searchbarButtonItem.Width = width;
         }
 
-        private void CreateCancelButton()
-        {
-            var element = Element as SearchPage;
-            if (element == null)
-            {
-                return;
-            }
-            if (NavigationController?.NavigationBar != null)
-            {
-                var searchButtonView = new UIView(new CGRect(0, 0, 60, NavigationController.NavigationBar.Frame.Height));
-                _cancelButton = new UIButton(UIButtonType.System)
-                {
-                    BackgroundColor = UIColor.Clear,
-                    Frame = searchButtonView.Frame,
-                    AutosizesSubviews = true,
-                    AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleMargins,
-                    HorizontalAlignment = UIControlContentHorizontalAlignment.Right
-                };
-            }
-            _cancelButton.SetTitle("Cancel", UIControlState.Normal);
-            _cancelButton.TouchUpInside -= CancelButton_TouchUpInside;
-            _cancelButton.TouchUpInside += CancelButton_TouchUpInside;
-        }
-
         private void DisplayRightBarButton(UIView button)
         {
             if (ParentViewController?.NavigationItem != null)
@@ -140,22 +151,18 @@ namespace SearchCustomNavigationPage.iOS
             }
         }
 
-        private void ClearRightToolbarButton()
+        private void HideSearchToolbar()
         {
-            if (ParentViewController?.NavigationItem != null)
+            NavigationItem.TitleView = _defaultTitleView;
+            if (ParentViewController?.NavigationItem == null)
             {
-                ParentViewController.NavigationItem.RightBarButtonItem = null;
+                return;
             }
+            ParentViewController.NavigationItem.LeftBarButtonItem = hamburgerButton;
+            ParentViewController.NavigationItem.TitleView = NavigationItem.TitleView;
         }
 
         private void SearchButton_TouchUpInside(object sender, System.EventArgs e) => ShowSearchToolbar();
-
-        private void CancelButton_TouchUpInside(object sender, System.EventArgs e)
-        {
-            ClearRightToolbarButton();
-            HideSearchToolbar();
-            DisplayRightBarButton(_searchButton);
-        }
 
         private void ShowSearchToolbar()
         {
@@ -171,17 +178,6 @@ namespace SearchCustomNavigationPage.iOS
                 return;
             }
             ParentViewController.NavigationItem.LeftBarButtonItem = NavigationItem.LeftBarButtonItem;
-            ParentViewController.NavigationItem.TitleView = NavigationItem.TitleView;
-        }
-
-        private void HideSearchToolbar()
-        {
-            NavigationItem.TitleView = _defaultTitleView;
-            if (ParentViewController?.NavigationItem == null)
-            {
-                return;
-            }
-            ParentViewController.NavigationItem.LeftBarButtonItem = hamburgerButton;
             ParentViewController.NavigationItem.TitleView = NavigationItem.TitleView;
         }
     }
